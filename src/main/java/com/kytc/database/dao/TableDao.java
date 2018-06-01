@@ -42,4 +42,12 @@ public interface TableDao {
 	 * @return Long
 	 */
 	Long dataCount(TableVO vo);
+	/**
+	 * @param database
+	 * @param tableName
+	 * @param priKey
+	 * @param priValue
+	 * @return Map
+	 */
+	Map<String,Object> dataDetail(@Param("database")String database,@Param("tableName")String tableName,@Param("priKey")String priKey,@Param("priValue")String priValue);
 }

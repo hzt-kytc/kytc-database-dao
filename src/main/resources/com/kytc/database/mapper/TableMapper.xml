@@ -68,4 +68,28 @@
 	  			and ${columnName} = #{columnValue}
 	  		</if> 
 	</select>
+	<select id="dataDetail" resultType="java.util.Map" parameterType="String">
+	  	SELECT 
+	  		*    
+	  	from 
+	  		${database}.${tableName}  
+	  	where 
+	  		1 = 1
+	  			and ${priKey} = #{priValue}
+	</select>
+	<insert id="addData" parameterType="java.util.Map">
+		insert into ${database}.${tableName} (
+			<foreach collection="map.keySet" item="item" separator=",">
+				<if test="item!='database' or item!='tableName'">
+					${item}
+				</if>
+			</foreach>
+		)values(
+			<foreach collection="map.keySet" item="item" separator=",">
+				<if test="item!='database' or item!='tableName'">
+					#{map[${item}] }
+				</if>
+			</foreach>
+		)
+	</insert>
 </mapper>

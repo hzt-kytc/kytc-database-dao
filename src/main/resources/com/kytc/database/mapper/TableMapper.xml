@@ -78,15 +78,15 @@
 	  			and ${priKey} = #{priValue}
 	</select>
 	<insert id="addData" parameterType="java.util.Map">
-		insert into ${database}.${tableName} (
-			<foreach collection="map.keySet" item="item" separator=",">
-				<if test="item!='database' or item!='tableName'">
+		insert into ${map['database']}.${map['tableName']} (
+			<foreach collection="map.keys" item="item" separator=",">
+				<if test="item!='database' and item!='tableName'">
 					${item}
 				</if>
 			</foreach>
 		)values(
-			<foreach collection="map.keySet" item="item" separator=",">
-				<if test="item!='database' or item!='tableName'">
+			<foreach collection="map.keys" item="item" separator=",">
+				<if test="item!='database' and item!='tableName'">
 					#{map[${item}] }
 				</if>
 			</foreach>

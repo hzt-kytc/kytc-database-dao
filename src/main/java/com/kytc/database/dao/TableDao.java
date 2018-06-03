@@ -50,4 +50,12 @@ public interface TableDao {
 	 * @return Map
 	 */
 	Map<String,Object> dataDetail(@Param("database")String database,@Param("tableName")String tableName,@Param("priKey")String priKey,@Param("priValue")String priValue);
+	/**
+	 * @author fisher
+	 * @description 添加表数据
+	 * @date 2018年6月2日下午9:40:30
+	 * @param map
+	 * @return
+	 */
+	Boolean addData(@Param("map")Map<String,Object> map);
 }

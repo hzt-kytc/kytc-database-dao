@@ -58,4 +58,12 @@ public interface TableDao {
 	 * @return
 	 */
 	Boolean addData(@Param("map")Map<String,Object> map);
+	/**
+	 * @author fisher
+	 * @description 修改表数据
+	 * @date 2018年6月16日下午6:26:09
+	 * @param map
+	 * @return
+	 */
+	Boolean updateData(@Param("map")Map<String,Object> map);
 }

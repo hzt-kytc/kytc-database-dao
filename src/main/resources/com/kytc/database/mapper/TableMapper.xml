@@ -92,4 +92,16 @@
 			</foreach>
 		)
 	</insert>
+	<update id="updateData" parameterType="java.util.Map">
+		update 
+			${map['database']}.${map['tableName']} 
+		set
+			<foreach collection="map.keys" item="item" separator=",">
+				<if test="item!='database' and item!='tableName' and item!='_pri_key_' and item!='_pri_value_'">
+					${item} = #{map[${item}] }
+				</if>
+			</foreach>
+		where 
+			${map['_pri_key_']} = #{map[_pri_value_]}
+	</update>
 </mapper>

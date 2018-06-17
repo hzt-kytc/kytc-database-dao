@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kytc.database.dao.query.QueryQueryDao">
+	<resultMap id="queryPO" type="com.kytc.database.po.QueryPO">
+		<id column="id" property="id" />
+		<result column="content" property="content" />
+		<result column="title" property="title" />
+		<result column="sort_num" property="sortNum" />
+		<result column="gmt_create" property="gmtCreate" />
+		<result column="gmt_modified" property="gmtModified" />
+	</resultMap>
+	<insert id="add" parameterType="com.kytc.database.po.QueryPO" useGeneratedKeys="true" keyProperty="id">
+		insert
+			into
+				query.tb_query(
+			content,
+			title,
+			sort_num,
+			gmt_create,
+			gmt_modified
+		)values(
+			#{content},
+			#{title},
+			#{sortNum},
+			CURRENT_TIMESTAMP(),
+			CURRENT_TIMESTAMP()
+		);
+	</insert>
+	<update id="update" parameterType="com.kytc.database.po.QueryPO">
+		update 
+			query.tb_query
+		set
+			content = #{content},
+			title = #{title},
+			sort_num = #{sortNum},
+			gmt_modified = CURRENT_TIMESTAMP()
+		where 
+			id = #{id}
+	</update>
+	<select id="detail" parameterType="Integer" resultMap="queryPO">
+		select 
+			*
+		from
+			query.tb_query
+		where
+			id = #{id} 
+			limit 1;
+	</select>
+	<delete id="delete" parameterType="Integer" >
+		delete 
+			from 
+				query.tb_query
+		where 
+			id = #{id};	
+	</delete>
+	<sql id="listByCondition">
+		where
+			1 = 1
+			<if test="id!=null and id!=''">
+				and id = #{id}
+			</if>
+			<if test="title!=null and title!=''">
+				and title = #{title}
+			</if>
+			<if test="sortNum!=null and sortNum!=''">
+				and sort_num = #{sortNum}
+			</if>
+	</sql>
+	<select id="list" parameterType="com.kytc.database.vo.QueryVO" resultMap="queryPO">
+		select 
+			*
+		from
+			query.tb_query
+			<include refid="listByCondition"/> 
+			<if test="sort!=null and sort!=''">
+				order by ${sort} ${order} 
+			</if>
+			<if test="sort==null or sort==''">
+				order by gmt_modified desc 
+			</if>
+			limit #{start},#{pageSize};
+	</select>
+	<select id="count" parameterType="com.kytc.database.vo.QueryVO" resultType="Long">
+		select 
+			count(1)
+		from
+			query.tb_query
+			<include refid="listByCondition"/>
+	</select>
+	<select id="drop" resultType="com.kytc.dto.DropDTO">
+		select 
+			id,
+			title as text,
+			content as value 
+		from
+			query.tb_query 
+		where 
+			1 = 1 
+			order by sort_num desc
+	</select>
+</mapper>

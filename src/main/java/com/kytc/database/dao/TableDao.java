@@ -66,4 +66,15 @@ public interface TableDao {
 	 * @return
 	 */
 	Boolean updateData(@Param("map")Map<String,Object> map);
+	/**
+	 * @author fisher
+	 * @description 删除数据
+	 * @date 2018年6月16日下午11:04:17
+	 * @param database
+	 * @param tableName
+	 * @param priKey
+	 * @param priValue
+	 * @return
+	 */
+	Boolean deleteData(@Param("database")String database,@Param("tableName")String tableName,@Param("priKey")String priKey,@Param("priValue")String priValue);
 }

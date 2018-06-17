@@ -104,4 +104,10 @@
 		where 
 			${map['_pri_key_']} = #{map[_pri_value_]}
 	</update>
+	<delete id="deleteData" parameterType="String">
+		delete from  
+			${database}.${tableName} 
+		where 
+			${priKey} = #{priValue}
+	</delete>
 </mapper>
